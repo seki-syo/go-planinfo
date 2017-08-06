@@ -1,12 +1,12 @@
 # go-planinfo
-Manage events and information on the terminal
-ターミナルで予定と情報を管理しよう！
-元ネタはTEDのティム・アーバン氏の「先延ばし魔の頭の中はどうなっているのか」のライフカレンダー。
-Golangの練習も兼ねているので、コードが洗練されていないのは堪忍していただきたい。
-RSSを設定して流すこともできるよ！
+ Manage events and information on the terminal  
+ターミナルで予定と情報を管理しよう！  
+元ネタはTEDのティム・アーバン氏の「先延ばし魔の頭の中はどうなっているのか」のライフカレンダー。  
+Golangの練習も兼ねているので、コードが洗練されていないのは堪忍していただきたい。  
+RSSを設定して流すこともできるよ！  
 # 使い方
-'go get github.com/seki-syo/go-planinfo'
-'go-planinfo'
+`go get github.com/seki-syo/go-planinfo`  
+`go-planinfo`  
 設定はホームディレクトリのgo-planinfo.jsonにて設定する。（初回起動時にデフォルト設定で新規作成します。）
 ## 設定項目
 ### UnderInfoScrollSpeed
@@ -24,6 +24,7 @@ RSSを設定して流すこともできるよ！
 ### AutoPlanBoxAmount
 trueの場合、画面サイズ（起動時）に最適な数のPlanBoxを自動設定します。
 ### MyPlan
+==========
 予定を設定します。
 現状は一つのみです。
 #### Name
@@ -32,4 +33,3 @@ trueの場合、画面サイズ（起動時）に最適な数のPlanBoxを自動
 開始日を指定します。（例:2017/01/01）
 #### TargetDate
 終了日を指定します。（例:2017/12/31）
-
