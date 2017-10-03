@@ -31,6 +31,7 @@ import (
 type Setting struct {
 	UnderInfoScrollSpeed int      `json:"UnderInfoScrollSpeed"` //msごとに下部のスクロール速度
 	FlushRate            int      `json:"FlushRate"`            //画面更新間隔(ms)
+	UseRSS               bool     `json:"UseRSS"`               //RSSを使うか？
 	RSSURL               []string `json:"RSSURL"`               //RSS取得のためのURL(空白の場合はNHKニュース)
 	PlanBoxAmount        int      `json:"PlanBoxAmount"`        //プランボックス表示数(-1の場合は自動設定)
 	MaxPlanBoxAmount     int      `json:"MaxPlanBoxAmount"`     //プランボックスの最大数(-1の場合は無制限)
@@ -110,6 +111,7 @@ var (
 		//初期設定
 		UnderInfoScrollSpeed: 50,
 		FlushRate:            20,
+		UseRSS:               true,
 		RSSURL: []string{
 			"http://www3.nhk.or.jp/rss/news/cat0.xml",
 			"https://rss-weather.yahoo.co.jp/rss/days/4410.xml",
@@ -153,10 +155,13 @@ func main() {
 	Update()         //更新
 	UpdatePlanInfo() //Planに関して計算する。
 	go KeyEventLoop()
-	go UnderInfoScrollTimer()
 	go FlushTimer()
-	go GetNewsTimer()
 	go Today2TomorrowTimer()
+	if nowSetting.UseRSS {
+		//RSSが有効の時
+		go UnderInfoScrollTimer()
+		go GetNewsTimer()
+	}
 	mainLoop()
 	defer termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 	defer termbox.Close()
@@ -210,7 +215,7 @@ func Init() {
 		//最大数を設定
 		nowSetting.PlanBoxAmount = nowSetting.MaxPlanBoxAmount
 	}
-	if len(nowSetting.RSSURL) == 0 {
+	if len(nowSetting.RSSURL) == 0 && nowSetting.UseRSS {
 		//空白の場合はRSSURLを自動設定
 		nowSetting.RSSURL = defaultSetting.RSSURL
 	}
@@ -423,8 +428,6 @@ func mainLoop() {
 		case <-dCh:
 			//日付が変わるとき
 			UpdatePlanInfo()
-
-		default:
 		}
 	}
 }

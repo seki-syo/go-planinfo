@@ -13,6 +13,8 @@ RSSを設定して流すこともできるよ！
 画面下部を流れるRSS情報のスクロールスピード(ms)
 ### FlushRate
 画面更新間隔(ms)
+###UseRSS
+RSS機能を使用するか定義します。
 ### RSSURL
 取得するRSSのURL(配列で指定します。)。一時間ごとに更新します。
 ### PlanBoxAmount
